@@ -52,11 +52,21 @@ def save_to_csv():
                  dict_writer.writeheader()
                  dict_writer.writerows(expenses)
 
+#double-clicking deletes an expense from both the tkinter listbox and expenses list
+def delete_expense(event=None):
+    index = expense_list.curselection()
+    if index:
+        index = index[0]
+        print(index)
+        expense_list.delete(index)
+        expenses.pop(index)
+
 #tkinter widget initialization + setup
 add_expense_button = tk.Button(text = "Add Expense", command=addExpense)
 add_expense_button.pack()
 expense_list = Listbox()
 expense_list.pack(fill="x")
+expense_list.bind("<Button-1>", delete_expense)
 visualize_expenses = tk.Button(text = "Visualize Expenses", command=update_pie_chart)
 visualize_expenses.pack()
 save_expenses = tk.Button(text = "Save Expenses", command=save_to_csv)
